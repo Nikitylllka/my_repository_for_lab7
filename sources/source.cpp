@@ -35,7 +35,7 @@ public:
     string login;
     time_t sec = 0;
 
-    Client(boost::asio::io_context *context) :
+    explicit Client(boost::asio::io_context *context) :
             my_socket(*context) {}
 };
 
@@ -71,11 +71,10 @@ public:
 
     void Choose_request() {
         while (true) {
-            std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1)); //9900kf
+ std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1)); //9900kf
             block.lock();
             if (!my_vector.empty()) {
                 for (auto it = my_vector.begin(); it != my_vector.end(); ++it) {
-
                     if (client_list_chandeg == true) {
                         continue;
                     }
@@ -89,10 +88,8 @@ public:
                         Communication(it);
 
                         (*it)->sec = time(NULL);
-
                     }
                     catch (exception &e) {
-
                         if (string(e.what()) == read_until_ex ) {
                             if ((time(NULL) - (*it)->sec) >= 5) {
                                 (*it)->my_socket.close();
@@ -139,7 +136,7 @@ public:
         boost::asio::read_until((*iter_ping)->my_socket, buffer, '\n');
 
         std::string ping(istreambuf_iterator<char>{&buffer},
-                         istreambuf_iterator<char>{}); // (c) MoraPresence
+                         istreambuf_iterator<char>{});
         ping = Erase_str(ping);
 
         cout << ping << endl;
@@ -155,7 +152,7 @@ public:
         boost::asio::read_until((*iter)->my_socket, buffer, '\n');
 
         std::string name(istreambuf_iterator<char>{&buffer},
-                         istreambuf_iterator<char>{}); // (c) MoraPresence
+                         istreambuf_iterator<char>{});
 
         (*iter)->login = name;
 
@@ -172,33 +169,33 @@ public:
         boost::asio::read_until((*client)->my_socket, buffer, '\n');
 
         std::string request(istreambuf_iterator<char>{&buffer},
-                            istreambuf_iterator<char>{}); // (c) MoraPresence
+                            istreambuf_iterator<char>{});
 
         request = Erase_str(request);
 
         if (request == list) {
             cout << "Client choose list" << endl;
             List(client);
-            std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
+       std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
         } else if (request == ping) {
             cout << "Client choose ping" << endl;
 
             out << ping_k << "\n";
             boost::asio::write((*client)->my_socket, buffer);
             Ping(client);
-            std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
+       std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
         } else if (request == login) {
             cout << "Client choose login" << endl;
 
             out << login << "\n";
             boost::asio::write((*client)->my_socket, buffer);
             Login_record(client);
-            std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
+       std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
         } else {
             std::iostream out(&buffer);
             out << valid_request << "\n";
             boost::asio::write((*client)->my_socket, buffer);
-            std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
+       std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
         }
 		
     }

@@ -95,13 +95,13 @@ public:
                                 (*it)->my_socket.close();
                             }
                         } else {
-							(*it)->my_socket.close();
-							}
+(*it)->my_socket.close();
+}
                 }
                 client_list_chandeg = false;
 
           for (vector<shared_ptr<Client>>::iterator itera = my_vector.begin();
-				itera != my_vector.end();) {
+itera != my_vector.end();) {
                     if (!(*itera)->my_socket.is_open()) {
                         my_vector.erase(itera);
                     } else {
@@ -112,7 +112,7 @@ public:
             block.unlock();
         }
     }
-}	
+}
 
     string Erase_str(string a) {
         a = a.erase(a.size() - 1);
@@ -124,8 +124,8 @@ public:
         std::iostream out(&buffer_list);
         out << client_list;
 
-		for (vector<shared_ptr<Client>>::iterator it = my_vector.begin();
-		it != my_vector.end();){
+for (vector<shared_ptr<Client>>::iterator it = my_vector.begin();
+it != my_vector.end();){
             out << (*it)->login << endl;
             ++it;
         }

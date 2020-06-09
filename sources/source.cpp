@@ -112,6 +112,7 @@ public:
             block.unlock();
         }
     }
+}	
 
     string Erase_str(string a) {
         a = a.erase(a.size() - 1);

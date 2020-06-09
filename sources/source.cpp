@@ -32,7 +32,7 @@ const char connected[] = "you are connected, ";
 struct Client {
 public:
     sock my_socket;
-    string login;
+    std::string login;
     time_t sec = 0;
 
     explicit Client(boost::asio::io_context *context) :
@@ -43,12 +43,12 @@ class Server {
 public:
     boost::asio::streambuf buffer{};
     io_context context;
-    vector<shared_ptr<Client>> my_vector;
+    std::vector<shared_ptr<Client>> my_vector;
     std::mutex block;
     bool client_list_chandeg = false;
 
     Server() {
-        cout << serv_start << endl;
+        std::cout << serv_start << std::endl;
     }
 
     void Listening_socket() {
@@ -60,7 +60,7 @@ public:
             acc.accept(zero_Client.my_socket);
             zero_Client.my_socket.non_blocking(true);
             block.lock();
-            cout << "client connected!" << endl;
+            std::cout << "client connected!" << std::endl;
             zero_Client.sec = time(NULL);
             my_vector.push_back(make_shared<Client>(std::move(zero_Client)));
             client_list_chandeg = true;
@@ -114,7 +114,7 @@ itera != my_vector.end();) {
     }
 }
 
-    string Erase_str(string a) {
+    std::string Erase_str(std::string a) {
         a = a.erase(a.size() - 1);
         return a;
     }

@@ -94,13 +94,11 @@ public:
                             if ((time(NULL) - (*it)->sec) >= 5) {
                                 (*it)->my_socket.close();
                             }
-                        } else
-                            (*it)->my_socket.close();
-                    }
+                        } else{(*it)->my_socket.close();}
                 }
                 client_list_chandeg = false;
 
-                for (vector<shared_ptr<Client>>::iterator itera = my_vector.begin();
+          for (vector<shared_ptr<Client>>::iterator itera = my_vector.begin();
 				itera != my_vector.end();) {
                     if (!(*itera)->my_socket.is_open()) {
                         my_vector.erase(itera);
@@ -124,9 +122,9 @@ public:
         out << client_list;
 
 		for (vector<shared_ptr<Client>>::iterator it = my_vector.begin();
-		it != my_vector.end();) {
+		it != my_vector.end();){
             out << (*it)->login << endl;
-            ++it;	
+            ++it;
         }
 
         boost::asio::write((*iter_list)->my_socket, buffer_list);

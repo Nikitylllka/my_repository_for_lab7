@@ -12,8 +12,6 @@
 #include <time.h>
 
 
-using namespace std;
-
 using sock = boost::asio::ip::tcp::socket;
 using acceptor = boost::asio::ip::tcp::acceptor;
 using endpoint = boost::asio::ip::tcp::endpoint;
@@ -23,13 +21,13 @@ using streambuffer = boost::asio::streambuf;
 const char ip_sock[] = "127.0.0.1";
 const char ping_k[] = "ping_ok!";
 const char serv_start[] = "server started...";
-const string read_until_ex = "read_until: Resource temporarily unavailable";
-const string login = "login";
-const string ping = "ping";
-const string list = "list";
-const string client_list = "Client list : ";
-const string valid_request = "Please enter a valid request";
-const string connected = "you are connected, ";
+const char read_until_ex[] = "read_until: Resource temporarily unavailable";
+const char login[] = "login";
+const char ping[] = "ping";
+const char list[] = "list";
+const char client_list[] = "Client list : ";
+const char valid_request[] = "Please enter a valid request";
+const char connected[] = "you are connected, ";
 
 struct Client {
 public:
@@ -130,6 +128,7 @@ public:
         for (vector<shared_ptr<Client>>::iterator it = my_vector.begin(); it != my_vector.end();) {
             out << (*it)->login << endl;
             ++it;
+			
         }
 
         boost::asio::write((*iter_list)->my_socket, buffer_list);
@@ -201,6 +200,7 @@ public:
             boost::asio::write((*client)->my_socket, buffer);
             std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
         }
+		
     }
 
     void Start() {

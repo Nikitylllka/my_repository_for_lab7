@@ -90,7 +90,7 @@ public:
                         (*it)->sec = time(NULL);
                     }
                     catch (exception &e) {
-                        if (string(e.what()) == read_until_ex ) {
+                        if (string(e.what()) == read_until_ex) {
                             if ((time(NULL) - (*it)->sec) >= 5) {
                                 (*it)->my_socket.close();
                             }
@@ -100,7 +100,8 @@ public:
                 }
                 client_list_chandeg = false;
 
-                for (vector<shared_ptr<Client>>::iterator itera = my_vector.begin(); itera != my_vector.end();) {
+                for (vector<shared_ptr<Client>>::iterator itera = my_vector.begin();
+				itera != my_vector.end();) {
                     if (!(*itera)->my_socket.is_open()) {
                         my_vector.erase(itera);
                     } else {
@@ -122,10 +123,10 @@ public:
         std::iostream out(&buffer_list);
         out << client_list;
 
-        for (vector<shared_ptr<Client>>::iterator it = my_vector.begin(); it != my_vector.end();) {
+		for (vector<shared_ptr<Client>>::iterator it = my_vector.begin();
+		it != my_vector.end();) {
             out << (*it)->login << endl;
-            ++it;
-			
+            ++it;	
         }
 
         boost::asio::write((*iter_list)->my_socket, buffer_list);
@@ -140,7 +141,7 @@ public:
         ping = Erase_str(ping);
 
         cout << ping << endl;
-        if (ping == ping_k ) {
+        if (ping == ping_k) {
             std::ostream out(&buffer);
             out << ping_k << "\n";
             boost::asio::write((*iter_ping)->my_socket, buffer);
@@ -164,7 +165,6 @@ public:
     }
 
     void Communication(vector<shared_ptr<Client>>::iterator client) {
-
         std::iostream out(&buffer);
         boost::asio::read_until((*client)->my_socket, buffer, '\n');
 
@@ -197,11 +197,9 @@ public:
             boost::asio::write((*client)->my_socket, buffer);
        std::this_thread::sleep_for(std::chrono_literals::operator ""ms(1000));
         }
-		
     }
 
     void Start() {
-
         thread t1(&Server::Listening_socket, this);
 
         thread t2(&Server::Choose_request, this);
@@ -209,7 +207,6 @@ public:
         t1.join();
         t2.join();
     }
-
 };
 
 int main() {

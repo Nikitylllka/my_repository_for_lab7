@@ -94,7 +94,9 @@ public:
                             if ((time(NULL) - (*it)->sec) >= 5) {
                                 (*it)->my_socket.close();
                             }
-                        } else{(*it)->my_socket.close();}
+                        } else {
+							(*it)->my_socket.close();
+							}
                 }
                 client_list_chandeg = false;
 
